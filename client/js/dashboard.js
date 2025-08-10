@@ -13,7 +13,7 @@ async function showReservations(limit = true) {
   totalPeople(guests);
   totalSpace(guests);
 
-  // Show only five items or all
+  // Show only five items
   data = limit ? data.splice(0, 5) : data;
   data.forEach((item) => {
     var { id, fullname, guests, date, hour, status } = item;
@@ -47,8 +47,6 @@ function formatHour(time) {
 }
 function totalReservations(reservationsNum) {
   const totalDiv = document.getElementById("totalReservations").children[0];
-
-  console.log(totalDiv);
   totalDiv.innerHTML = reservationsNum;
 }
 function totalPeople(peopleNum) {
