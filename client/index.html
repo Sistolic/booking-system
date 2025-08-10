@@ -52,7 +52,6 @@
           <input
             type="text"
             name="fullname"
-            value="Sistolic"
             placeholder="Name to reserve the table"
             onkeyup="validateInput(this)"
             minlength="4"
@@ -66,7 +65,6 @@
           <input
             type="number"
             name="guests"
-            value="4"
             min="1"
             max="8"
             placeholder="8 max"
@@ -96,7 +94,6 @@
           <input
             type="text"
             max="12"
-            value="312 000 0000"
             name="contact"
             placeholder="If there's change on the reservation"
             required
@@ -143,7 +140,7 @@
           form.reset();
           document.querySelector(".form-item.email").style.display = "none";
 
-          showSection("user", false);
+          showSection(false);
         }
       });
     </script>

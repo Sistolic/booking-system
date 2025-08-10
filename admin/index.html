@@ -81,7 +81,6 @@
           <input
             type="text"
             name="fullname"
-            value="Sistolic"
             placeholder="Name to reserve the table"
             onkeyup="validateInput(this)"
             minlength="4"
@@ -95,7 +94,6 @@
           <input
             type="number"
             name="guests"
-            value="4"
             min="1"
             max="8"
             placeholder="8 max"
@@ -125,7 +123,6 @@
           <input
             type="text"
             max="12"
-            value="312 000 0000"
             name="contact"
             placeholder="If there's change on the reservation"
             required
@@ -154,10 +151,6 @@
     <script src="js/utils.js"></script>
     <script src="js/dashboard.js"></script>
     <script>
-      // document.querySelector(".action-btn").addEventListener("click", () => {
-      //  document.querySelector(".section").style.display = "flex";
-      // });
-
       const form = document.querySelector("form");
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -176,7 +169,7 @@
           form.reset();
           document.querySelector(".form-item.email").style.display = "none";
 
-          showSection("user", false);
+          showSection(false);
         }
       });
     </script>
