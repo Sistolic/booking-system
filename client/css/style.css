@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Georgia', serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #fff;
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-section .btn {
+  color: #fff;
+  border: none;
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: all .3s ease;
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+}
+.btn:hover {
+  transform: translateY(2px);
+  box-shadow: 0 8px 24px rgba(72, 187, 120, 0.3);
+}
+.btn.admin {
+  margin-left: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+@media (max-width: 768px) { }

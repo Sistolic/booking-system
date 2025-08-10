@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking system</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="assets/reservation.css" />
+    <link rel="stylesheet" href="assets/sidebar.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <h2>Restaurant</h2>
+        </div>
+
+        <div class="nav-container">
+          <nav>
+            <a href="/" class="nav-item active">Main page</a>
+          </nav>
+
+          <div class="actions-container" style="display: none">
+            <button class="action-btn" onclick="showSection(false)">
+              Close modal
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-section">
+        <button class="btn user" onclick="showSection()">
+          User reservations
+        </button>
+        <button class="btn admin">
+          <a href="/admin/" style="text-decoration: none; color: white">
+            Admin dashboard
+          </a>
+        </button>
+      </div>
+    </div>
+
+    <div class="section" style="display: none">
+      <div class="section-header">
+        <h1>Book now</h1>
+      </div>
+
+      <form>
+        <div class="form-item">
+          <label for="fullname">Full name</label>
+          <input
+            type="text"
+            name="fullname"
+            value="Sistolic"
+            placeholder="Name to reserve the table"
+            onkeyup="validateInput(this)"
+            minlength="4"
+            maxlength="58"
+            required
+          />
+        </div>
+
+        <div class="form-item">
+          <label for="guests">How many people?</label>
+          <input
+            type="number"
+            name="guests"
+            value="4"
+            min="1"
+            max="8"
+            placeholder="8 max"
+            required
+          />
+        </div>
+
+        <div class="form-item">
+          <label for="date">Date</label>
+          <input type="date" name="date" required />
+        </div>
+
+        <div class="form-item">
+          <label for="hour">Time from 18:00 to 22:00</label>
+          <input
+            type="time"
+            name="hour"
+            min="18:00"
+            max="22:00"
+            value="18:00"
+            required
+          />
+        </div>
+
+        <div class="form-item">
+          <label for="contact">Contact number</label>
+          <input
+            type="text"
+            max="12"
+            value="312 000 0000"
+            name="contact"
+            placeholder="If there's change on the reservation"
+            required
+          />
+        </div>
+
+        <div class="form-item check">
+          <input type="checkbox" />
+          <label> Send an email confirmation </label>
+        </div>
+
+        <div class="form-item email" style="display: none">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email to send the confirmation"
+          />
+        </div>
+
+        <button type="submit" class="submit-btn">Save</button>
+      </form>
+    </div>
+
+    <script src="js/utils.js"></script>
+
+    <script>
+      const form = document.querySelector("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Create payload of type multipart/form-data (always of this type when using the FormData() constructor):
+        const fd = new FormData(form);
+        const urlEncoded = new URLSearchParams(fd).toString(); // Convert to URL-encoded string:
+
+        var response = await fetch("/api/reservations/make", {
+          method: "POST",
+          body: urlEncoded,
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        });
+
+        if (response.ok) {
+          form.reset();
+          document.querySelector(".form-item.email").style.display = "none";
+
+          showSection("user", false);
+        }
+      });
+    </script>
+  </body>
+</html>

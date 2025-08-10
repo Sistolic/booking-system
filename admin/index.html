@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="css/pages/dashboard.css" />
+    <link rel="stylesheet" href="assets/sidebar.css" />
+    <link rel="stylesheet" href="assets/reservation.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <h2>Booking management</h2>
+        </div>
+
+        <div class="nav-container">
+          <nav>
+            <a href="/" class="nav-item">Main page</a>
+            <a href="/admin/" class="nav-item active">Dashboard</a>
+          </nav>
+
+          <div class="actions-container">
+            <button class="action-btn new" onclick="showSection()">
+              + New Reservation
+            </button>
+            <button
+              class="action-btn close"
+              onclick="showSection(false)"
+              style="display: none"
+            >
+              Close modal
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <h1 class="header">Dashboard</h1>
+
+        <div class="stats-grid">
+          <div class="stat-card" id="totalReservations">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Today's reservations</div>
+          </div>
+          <div class="stat-card" id="totalCustomers">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Total customers</div>
+          </div>
+          <div class="stat-card" id="totalSpace">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Space available</div>
+          </div>
+        </div>
+
+        <div class="dashboard">
+          <div class="card-header">
+            <div class="card-title">Recent reservations</div>
+            <button class="btn-primary" onclick="showReservations(false)">
+              View all
+            </button>
+          </div>
+
+          <div class="reservation-grid"></div>
+        </div>
+
+        <!--  -->
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h1>Book now</h1>
+      </div>
+
+      <form>
+        <div class="form-item">
+          <label for="fullname">Full name</label>
+          <input
+            type="text"
+            name="fullname"
+            value="Sistolic"
+            placeholder="Name to reserve the table"
+            onkeyup="validateInput(this)"
+            minlength="4"
+            maxlength="58"
+            required
+          />
+        </div>
+
+        <div class="form-item">
+          <label for="guests">How many people?</label>
+          <input
+            type="number"
+            name="guests"
+            value="4"
+            min="1"
+            max="8"
+            placeholder="8 max"
+            required
+          />
+        </div>
+
+        <div class="form-item">
+          <label for="date">Date</label>
+          <input type="date" name="date" required />
+        </div>
+
+        <div class="form-item">
+          <label for="hour">Time from 18:00 to 22:00</label>
+          <input
+            type="time"
+            name="hour"
+            min="18:00"
+            max="22:00"
+            value="18:00"
+            required
+          />
+        </div>
+
+        <div class="form-item">
+          <label for="contact">Contact number</label>
+          <input
+            type="text"
+            max="12"
+            value="312 000 0000"
+            name="contact"
+            placeholder="If there's change on the reservation"
+            required
+          />
+        </div>
+
+        <div class="form-item check">
+          <input type="checkbox" />
+          <label> Send an email confirmation </label>
+        </div>
+
+        <div class="form-item email" style="display: none">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email to send the confirmation"
+          />
+        </div>
+
+        <button type="submit" class="submit-btn">Save</button>
+      </form>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+      // document.querySelector(".action-btn").addEventListener("click", () => {
+      //  document.querySelector(".section").style.display = "flex";
+      // });
+
+      const form = document.querySelector("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Create payload of type multipart/form-data (always of this type when using the FormData() constructor):
+        const fd = new FormData(form);
+        const urlEncoded = new URLSearchParams(fd).toString(); // Convert to URL-encoded string:
+
+        var response = await fetch("/api/reservations/make", {
+          method: "POST",
+          body: urlEncoded,
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        });
+
+        if (response.ok) {
+          form.reset();
+          document.querySelector(".form-item.email").style.display = "none";
+
+          showSection("user", false);
+        }
+      });
+    </script>
+  </body>
+</html>
